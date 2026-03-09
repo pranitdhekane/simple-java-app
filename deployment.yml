@@ -1,4 +1,10 @@
+
 ---
+# Playbook: Deploy Simple Java App
+# Author: Pranit Dhekane
+# Date : 09-March-2026
+# Description: This playbook installs Java, downloads Tomcat, and deploys a Java application.
+
 - name: deploy simple java app
   hosts: server
   become: true
