@@ -1,0 +1,36 @@
+---
+- name: deploy simple java app
+  hosts: server
+  become: true
+
+  tasks:
+
+    - name: update server
+      apt:
+        update_cache: yes
+
+    - name: Install JDK and Wget
+      apt:
+        name:
+          - openjdk-17-jdk
+          - wget
+        state: present
+
+    - name: Download and install tomcat
+      shell: |
+        cd /opt
+        wget https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.52/bin/apache-tomcat-10.1.52.tar.gz
+        tar -xvzf apache-tomcat-10.1.52.tar.gz
+        rm -rf apache-tomcat-10.1.52.tar.gz
+        mv apache-tomcat-10.1.52 tomcat
+        chown -R ubuntu:ubuntu /opt/tomcat
+
+    - name: Start tomcat server
+      shell: |
+        cd /opt/tomcat/bin
+        ./startup.sh
+
+    - name: Clone the application into server
+      shell: |
+        cd /opt/tomcat/webapps
+        git clone https://github.com/pranitdhekane/simple-java-app.git
