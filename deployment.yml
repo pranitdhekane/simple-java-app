@@ -39,4 +39,10 @@
     - name: Clone the application into server
       shell: |
         cd /opt/tomcat/webapps
-        git clone https://github.com/pranitdhekane/simple-java-app.git
+         if [ -d "simple-java-app" ]; then
+          cd simple-java-app
+          git pull
+        else 
+          git clone https://github.com/pranitdhekane/simple-java-app.git
+
+        fi
